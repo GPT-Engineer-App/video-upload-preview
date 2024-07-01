@@ -46,7 +46,7 @@ const Index = () => {
 
     switch (platform) {
       case "Instagram":
-        apiUrl = "https://api.instagram.com/v1/media/upload"; // Placeholder URL
+        apiUrl = "https://graph.instagram.com/v12.0/me/media"; // Corrected URL
         break;
       case "Facebook":
         apiUrl = "https://graph.facebook.com/v12.0/me/videos"; // Placeholder URL
@@ -70,6 +70,7 @@ const Index = () => {
         toast.error(`Failed to post video to ${platform}.`);
       }
     } catch (error) {
+      console.error(`Error posting video to ${platform}:`, error);
       toast.error(`Error posting video to ${platform}: ${error.message}`);
     }
   };
