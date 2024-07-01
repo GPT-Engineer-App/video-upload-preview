@@ -77,7 +77,7 @@ const Index = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center space-y-4">
-      <h1 className="text-3xl text-center">Video Upload and Preview</h1>
+      <h1 className="text-3xl text-center">Upload and Preview Your Video</h1>
       <Input type="file" accept="video/*" onChange={handleVideoUpload} />
       {videoPreview && (
         <video
