@@ -46,7 +46,7 @@ const Index = () => {
         toast.error(`Unknown platform: ${platform}`);
         return;
     }
-    window.location.href = url;
+    window.open(url, "_blank");
   };
 
   return (
