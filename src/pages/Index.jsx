@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
+import axios from "axios";
 
 const Index = () => {
   const [videoFile, setVideoFile] = useState(null);
@@ -33,20 +34,44 @@ const Index = () => {
     }, 5000);
   };
 
-  const handleShare = (platform) => {
-    let url = "";
+  const handleShare = async (platform) => {
+    if (!editedVideoUrl) {
+      toast.error("Please process the video first.");
+      return;
+    }
+
+    let apiUrl = "";
+    let formData = new FormData();
+    formData.append("video", videoFile);
+
     switch (platform) {
       case "Instagram":
-        url = "https://www.instagram.com";
+        apiUrl = "https://api.instagram.com/v1/media/upload"; // Placeholder URL
         break;
       case "Facebook":
-        url = "https://www.facebook.com";
+        apiUrl = "https://graph.facebook.com/v12.0/me/videos"; // Placeholder URL
         break;
       default:
         toast.error(`Unknown platform: ${platform}`);
         return;
     }
-    window.open(url, "_blank");
+
+    try {
+      const response = await axios.post(apiUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer YOUR_ACCESS_TOKEN`, // Replace with actual access token
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success(`Video posted to ${platform} successfully!`);
+      } else {
+        toast.error(`Failed to post video to ${platform}.`);
+      }
+    } catch (error) {
+      toast.error(`Error posting video to ${platform}: ${error.message}`);
+    }
   };
 
   return (
