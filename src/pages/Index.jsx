@@ -33,19 +33,20 @@ const Index = () => {
     }, 5000);
   };
 
-  const handleShare = async (platform) => {
-    if (!editedVideoUrl) {
-      toast.error("No edited video available to share.");
-      return;
+  const handleShare = (platform) => {
+    let url = "";
+    switch (platform) {
+      case "Instagram":
+        url = "https://www.instagram.com";
+        break;
+      case "Facebook":
+        url = "https://www.facebook.com";
+        break;
+      default:
+        toast.error(`Unknown platform: ${platform}`);
+        return;
     }
-
-    try {
-      // Simulate API call to share video
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      toast.success(`Video shared successfully on ${platform}!`);
-    } catch (error) {
-      toast.error(`Failed to share video on ${platform}.`);
-    }
+    window.location.href = url;
   };
 
   return (
@@ -83,10 +84,10 @@ const Index = () => {
             Download Edited Video
           </a>
           <div className="flex space-x-2 mt-4">
-            <Button onClick={() => handleShare('Instagram')} className="bg-pink-500 text-white">
+            <Button onClick={() => handleShare("Instagram")} className="bg-pink-500 text-white">
               Share on Instagram
             </Button>
-            <Button onClick={() => handleShare('Facebook')} className="bg-blue-500 text-white">
+            <Button onClick={() => handleShare("Facebook")} className="bg-blue-500 text-white">
               Share on Facebook
             </Button>
           </div>
