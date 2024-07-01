@@ -33,6 +33,21 @@ const Index = () => {
     }, 5000);
   };
 
+  const handleShare = async (platform) => {
+    if (!editedVideoUrl) {
+      toast.error("No edited video available to share.");
+      return;
+    }
+
+    try {
+      // Simulate API call to share video
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      toast.success(`Video shared successfully on ${platform}!`);
+    } catch (error) {
+      toast.error(`Failed to share video on ${platform}.`);
+    }
+  };
+
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center space-y-4">
       <h1 className="text-3xl text-center">Video Upload and Preview</h1>
@@ -67,6 +82,14 @@ const Index = () => {
           >
             Download Edited Video
           </a>
+          <div className="flex space-x-2 mt-4">
+            <Button onClick={() => handleShare('Instagram')} className="bg-pink-500 text-white">
+              Share on Instagram
+            </Button>
+            <Button onClick={() => handleShare('Facebook')} className="bg-blue-500 text-white">
+              Share on Facebook
+            </Button>
+          </div>
         </div>
       )}
     </div>
